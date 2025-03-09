@@ -1,0 +1,296 @@
+LikeAnythingS
+Register / Log In
+Md. Shahariar Hasan
+Md. Shahariar Hasan 
+Owner of LikeAnythingS
+
+ From Bangladesh
+ Blood group is B+
+ Male
+ Occupation is Student
+ Followed by 0
+Md. Shahariar Hasan
+Md. Shahariar Hasan
+53 minutes ago 
+Microprocessor emu8086
+
+.MODEL SMALL
+.STACK 100H
+.DATA
+msg1 db "Enter the first number from 0 to 5: $"
+msg2 db 10,13, "Enter second number from 0 to 4: $" ;10,13 means new line as same as mov dl,0Ah and mov dl,0DH
+.CODE
+MAIN PROC
+mov ax,@data ;get data segment
+mov ds, ax ;initialize data segment
+
+mov ah,9 ;output function for string
+lea dx,msg1 ;load effective address for msg1
+int 21h
+
+mov bl,al
+int 21h
+
+mov ah,9
+lea dx,msg2
+int 21h
+
+mov ah,01
+int 21h
+mov cl,al
+
+add bl,cl
+
+mov ah,2
+mov dl,0ah ;new line
+int 21h
+mov dl,0dh
+int 21h
+
+mov ah,02
+sub bl,48h
+mov dl,bl
+int 21h
+
+mov ah,4CH
+int 21h
+MAIN ENDP
+ENDP MAIN
+
+
+.model small
+.stack 100h ;used for storage in hexa decimal value
+.data
+.code
+main proc
+mov al, 02d
+add al, 03d
+mov bl, al
+
+mov ah, 02h ;1h for single char. input, 2h for single char. output, 9 for string
+mov dl,bl ;mandatory move into dl
+add dl, 30h ;used for ASCII code convertion
+int 21h ;mandatory
+main endp
+endp main
+
+
+
+
+.model small
+.stack 100h
+.Data
+msg DB 10,13,'This is not a number$'
+.code
+main proc
+mov ah,01
+int 21h
+
+cmp al,30h
+JL exit
+
+cmp al,39h
+JA exit
+
+JMP display
+
+exit:
+mov ax,@DATA
+mov ds,ax
+lea dx,msg
+mov ah,9
+int 21h
+
+mov ah, 4ch
+int 21h
+
+display:
+mov ah,2
+mov dl,al
+int 21h
+
+main endp
+endp main
+
+
+
+.model small
+.stack 100h
+.data
+x db 0d,1d,2d,3d,4d,5d,6d,7d,8d,9d ;db is define byte
+.code
+main proc
+mov ax, @data ;get data segment
+mov ds,ax ;initializ DS
+lea bx,x ;get the array of data
+mov cx,10d ;initialize the counter
+
+mov ah,2h
+d_loop: ;define level
+mov dl,[bx]
+add dl,30h
+int 21h ;interupt call
+inc bx ;increment
+loop d_loop
+
+mov ah,4ch ;dos return
+int 21h
+main endp
+endp main
+
+
+
+.model small
+.stack 100h
+.data
+x db 0d,1d,2d,3d,4d,5d,6d,7d,8d,9d ;db is define byte
+.code
+main proc
+mov ax, @data ;get data segment
+mov ds,ax ;initializ DS
+lea bx,x ;get the array of data
+add bx,9d
+mov cx,10d ;initialize the counter
+
+mov ah,2h
+d_loop: ;define level
+mov dl,[bx]
+add dl,30h
+int 21h ;interupt call
+dec bx ;decrement
+loop d_loop
+
+mov ah,4ch ;dos return
+int 21h
+main endp
+endp main
+
+
+.model small
+.stack 100h
+.data
+MSG1 DB "Please enter a lower case character: $"
+MSG2 DB "The uppercase character is: $"
+.code
+main proc
+mov ax, @data ;get data segment
+mov ds, ax ;initialize data segment to resistor
+
+lea dx, msg1 ;get first message
+mov ah, 9
+int 21h
+
+mov ah,1 ;save in by default "al"0 resistor
+int 21h
+sub al, 20h ;convert to uppercase
+mov bl, al ;store the converted value
+
+mov ah, 2
+mov dl, 0dh ;carriage return
+int 21h
+mov dl, 0ah ;new line
+int 21h
+
+lea dx, msg2 ;get second message
+mov ah, 9
+int 21h
+
+mov ah,2 ;single character output function
+mov dl, bl ;retrieve character and display it
+int 21h
+
+mov ah, 4ch ;dos exit function
+int 21h ;exit to dos
+main endp
+endp main
+
+
+.MODEL SMALL
+.STACK 100H
+.DATA
+msg1 DB 10,13,'Enter a number $'
+msg2 DB 10,13,'This is even number$'
+msg3 DB 10,13,'This is not an even number$'
+
+DISPLAY MACRO MSG
+MOV AH,9
+LEA DX,MSG
+INT 21H
+ENDM
+.CODE
+MAIN PROC
+MOV AX,@DATA
+MOV DS,AX
+DISPLAY msg1
+
+MOV AH,1
+INT 21H
+MOV AH,0
+
+MOV DL,2
+DIV DL
+CMP AH,0
+JNE ODD
+
+EVEN:
+DISPLAY msg2
+JMP DONE
+ODD:
+DISPLAY msg3
+DONE:
+MOV AH,4CH
+INT 21H
+main endp
+endp main
+
+
+
+.model small
+.stack 100h
+.Data
+msg DB "How many times would you like to print: $"
+msg1 db 10,13, "Hello!$"
+.code
+main proc
+mov ax,@Data
+mov ds,ax
+lea dx,msg
+mov ah,9
+int 21h
+
+mov ah,01
+int 21h
+mov bl,al
+mov ah,0
+aaa ;adjust after addition
+mov cx,ax
+lea dx,msg1
+ToP:
+mov ah,9
+int 21h
+loop Top
+mov ah,4ch
+int 21h
+main endp
+endp main
+
+
+
+.model small
+.stack 100h
+.data
+msg1 db "This program is done by using Macro$"
+display macro msg
+lea dx,msg1
+mov ah,09h
+int 21h
+endm
+.code
+main proc
+mov ax,@data ;initialize DS
+mov ds,ax
+display msg
+mov ah,4ch
+int 21h
+main endp
+endp main
